@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeDaily — Fundamentos de Programación Diarios</title>
+    <meta
+      name="description"
+      content="Practica fundamentos de programación cada día con retos adaptados a tu nivel. Sin registro, sin login. ¡Empieza ahora!"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CodeMirror -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- ========== WELCOME SCREEN ========== -->
+    <div id="welcome-screen" class="screen active">
+      <div class="particles" id="particles"></div>
+      <div class="welcome-container">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect
+                x="4"
+                y="8"
+                width="40"
+                height="32"
+                rx="4"
+                stroke="currentColor"
+                stroke-width="2.5"
+              />
+              <path
+                d="M14 24L20 18L14 12"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                transform="translate(0,6)"
+              />
+              <line
+                x1="22"
+                y1="30"
+                x2="32"
+                y2="30"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <h1 class="logo-text">Code<span class="accent">Daily</span></h1>
+        </div>
+        <p class="welcome-subtitle">
+          Practica fundamentos de programación cada día
+        </p>
+        <p class="welcome-description">
+          Resuelve retos de código JavaScript adaptados a tu nivel.<br />Sin
+          registro. Sin complicaciones. Solo código.
+        </p>
+
+        <div class="level-selector">
+          <h2 class="level-title">Elige tu nivel</h2>
+          <div class="level-cards">
+            <button class="level-card" data-level="facil" id="btn-facil">
+              <div class="level-card-icon">🌱</div>
+              <h3>Fácil</h3>
+              <p>
+                Variables, condicionales, bucles básicos y funciones simples.
+              </p>
+              <div class="level-tag tag-easy">Principiante</div>
+            </button>
+            <button class="level-card" data-level="medio" id="btn-medio">
+              <div class="level-card-icon">⚡</div>
+              <h3>Medio</h3>
+              <p>Arrays, objetos, métodos de array, lógica intermedia.</p>
+              <div class="level-tag tag-medium">Intermedio</div>
+            </button>
+            <button class="level-card" data-level="dificil" id="btn-dificil">
+              <div class="level-card-icon">🔥</div>
+              <h3>Difícil</h3>
+              <p>Algoritmos, recursión, estructuras de datos, optimización.</p>
+              <div class="level-tag tag-hard">Avanzado</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat-item">
+            <span class="stat-number" id="stat-streak">0</span>
+            <span class="stat-label">Racha actual</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" id="stat-solved">0</span>
+            <span class="stat-label">Resueltos</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number" id="stat-best">0</span>
+            <span class="stat-label">Mejor racha</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== CHALLENGE SCREEN ========== -->
+    <div id="challenge-screen" class="screen">
+      <header class="app-header">
+        <div class="header-left">
+          <button class="back-btn" id="btn-back" title="Volver al inicio">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <div class="header-brand">
+            <span class="header-logo"
+              >Code<span class="accent">Daily</span></span
+            >
+          </div>
+        </div>
+        <div class="header-center">
+          <div class="level-badge" id="current-level-badge">
+            <span class="level-dot"></span>
+            <span id="current-level-text">Fácil</span>
+          </div>
+          <div class="challenge-counter">
+            Reto <span id="challenge-number">1</span>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="streak-indicator">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+            <span id="header-streak">0</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="challenge-layout">
+        <!-- LEFT: Challenge Description -->
+        <section class="challenge-panel">
+          <div class="panel-header">
+            <div class="panel-tab active">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                />
+                <polyline points="14,2 14,8 20,8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+              Enunciado
+            </div>
+          </div>
+          <div class="challenge-content" id="challenge-content">
+            <!-- Filled by JS -->
+          </div>
+          <div class="challenge-actions">
+            <button class="btn btn-secondary" id="btn-solution">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              Ver posible solución
+            </button>
+          </div>
+          <!-- Solution Panel -->
+          <div class="solution-panel hidden" id="solution-panel">
+            <div class="solution-header">
+              <span>💡 Posible solución</span>
+              <button class="solution-close" id="btn-close-solution">✕</button>
+            </div>
+            <pre class="solution-code"><code id="solution-code"></code></pre>
+            <p class="solution-note">
+              Recuerda: hay muchas formas válidas de resolver un problema.
+            </p>
+          </div>
+        </section>
+
+        <!-- RIGHT: Code Editor -->
+        <section class="editor-panel">
+          <div class="panel-header">
+            <div class="panel-tab active">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="16,18 22,12 16,6" />
+                <polyline points="8,6 2,12 8,18" />
+              </svg>
+              Editor
+            </div>
+            <div class="editor-lang">JavaScript</div>
+          </div>
+          <div class="editor-wrapper">
+            <textarea id="code-editor"></textarea>
+          </div>
+          <div class="editor-actions">
+            <button class="btn btn-primary" id="btn-run">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polygon points="5,3 19,12 5,21 5,3" />
+              </svg>
+              Corregir código
+            </button>
+            <button class="btn btn-outline" id="btn-reset">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="1,4 1,10 7,10" />
+                <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+              </svg>
+              Reiniciar
+            </button>
+          </div>
+
+          <!-- Output Console -->
+          <div class="console-panel">
+            <div class="console-header">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="4,17 10,11 4,5" />
+                <line x1="12" y1="19" x2="20" y2="19" />
+              </svg>
+              Consola
+            </div>
+            <div class="console-output" id="console-output">
+              <span class="console-placeholder"
+                >Los resultados aparecerán aquí...</span
+              >
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ========== RESULT MODAL ========== -->
+    <div class="modal-overlay hidden" id="result-modal">
+      <div class="modal-card" id="modal-card">
+        <div class="modal-icon" id="modal-icon"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
+        <p class="modal-message" id="modal-message"></p>
+        <div class="modal-details" id="modal-details"></div>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+    <script src="challenges.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
