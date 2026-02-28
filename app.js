@@ -7,6 +7,11 @@
 (function () {
     'use strict';
 
+    // ===== UTILS =====
+    function escapeHTML(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     // ===== STATE =====
     const state = {
         currentLevel: null,     // 'facil' | 'medio' | 'dificil'
@@ -325,7 +330,7 @@
 
         els.headerStreak.textContent = state.streak;
 
-        showResultModal(allPassed, { passed, total });
+        showResultModal(allPassed, { passed, total, results });
     }
 
     // ===== CONSOLE =====
@@ -364,11 +369,27 @@
         }
 
         // Details
+        const testListItems = data.results ? data.results.map(r => {
+            const icon = r.pass ? '✅' : '❌';
+            const detail = r.pass
+                ? `Esperado: ${escapeHTML(r.expected)}`
+                : `Esperado: ${escapeHTML(r.expected)} | Obtenido: ${escapeHTML(r.got)}`;
+            return `<div class="test-result-item ${r.pass ? 'test-pass' : 'test-fail'}">
+                <span>${icon} ${escapeHTML(r.input)}</span>
+                <span class="test-expected">${detail}</span>
+            </div>`;
+        }).join('') : '';
+
         els.modalDetails.innerHTML = `
-            <div class="detail-row">
-                <span class="detail-label">Tests pasados</span>
-                <span class="detail-value">${data.passed}/${data.total}</span>
-            </div>
+            <details class="detail-dropdown">
+                <summary class="detail-row">
+                    <span class="detail-label">Tests pasados</span>
+                    <span class="detail-value">${data.passed}/${data.total}</span>
+                </summary>
+                <div class="test-results-list">
+                    ${testListItems}
+                </div>
+            </details>
             <div class="detail-row">
                 <span class="detail-label">Nivel</span>
                 <span class="detail-value">${state.currentLevel === 'facil' ? 'Fácil' : state.currentLevel === 'medio' ? 'Medio' : 'Difícil'}</span>
