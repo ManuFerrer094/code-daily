@@ -968,6 +968,64 @@ button {
   color: var(--text-primary);
 }
 
+.modal-details .detail-dropdown {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.15rem;
+}
+
+.modal-details .detail-dropdown summary {
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.modal-details .detail-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.modal-details .detail-dropdown summary .detail-label::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.4rem;
+  font-size: 0.65rem;
+  transition: transform 0.2s ease;
+  vertical-align: middle;
+}
+
+.modal-details .detail-dropdown[open] summary .detail-label::before {
+  transform: rotate(90deg);
+}
+
+.modal-details .test-results-list {
+  padding: 0.4rem 0 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.modal-details .test-result-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.modal-details .test-result-item.test-pass {
+  background: rgba(0, 230, 118, 0.08);
+}
+
+.modal-details .test-result-item.test-fail {
+  background: rgba(255, 82, 82, 0.08);
+}
+
+.modal-details .test-result-item .test-expected {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
 .modal-actions {
   display: flex;
   gap: 0.75rem;
